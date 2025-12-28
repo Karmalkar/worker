@@ -117,3 +117,7 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+project.ext.react = [
+    nodeExecutableAndArgs: [project.findProperty("NODE_BINARY") ?: "node"]
+]

@@ -6,14 +6,16 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react';
 import {
+  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
+  useWindowDimensions,
   View,
 } from 'react-native';
 
@@ -24,40 +26,22 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { Icons } from './src';
+import { typography } from './src/style/typography';
+import { FONTS } from './src/style/fonts';
+import { useThemeColors } from './src/hooks/useThemeColors';
+import XButton from './src/components/Xbutton';
+import { ArrowRight } from './src/assets/svg/ArrowRight';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
 
 function App(): React.JSX.Element {
+  const window = useWindowDimensions();
   const isDarkMode = useColorScheme() === 'dark';
-
+  const { colors, isDark } = useThemeColors()
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
@@ -71,30 +55,34 @@ function App(): React.JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
+        {/* <Header /> */}
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          <Image
+            source={require('../worker/src/assets/icons/Home.jpg')}
+            style={{ width: window.width, height: window.height / 1.4 }}
+          />
+          <Text style={{ ...typography.h1, textAlign: 'center', justifyContent: 'center', fontWeight: 'bold', paddingHorizontal: 20, color: colors.text }}>Task Management &
+            To-Do List:</Text>
+          <Text style={{...typography.caption ,textAlign: 'center', justifyContent: 'center', color: colors.textSecondary, paddingHorizontal: 30, marginTop: 10}}>
+            This productive tool is designed to help
+            you better manage your task
+            project-wise conveniently!
+          </Text>
+          <XButton title='Lets Start' onPress={() => {}} style={{ width: '80%', alignSelf: 'center', marginTop: 20 , backgroundColor:colors.main , borderRadius: 8}} EndIcon={<ArrowRight/>} />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
+
+// const ArrowRight = () => (
+//   <View style={{ marginLeft: 10, justifyContent: 'center', alignItems: 'center' }}>
+//     <Image source={require('./src/assets/icons/ArrowRight.jpg')} width={20} height={20} />
+//   </View>
+// );
 
 const styles = StyleSheet.create({
   sectionContainer: {
