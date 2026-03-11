@@ -11,7 +11,7 @@ export const COLORS = {
     700: '#1976D2',
     800: '#1565C0',
     900: '#0D47A1',
-    1000: '#5F33E1'
+    1000: '#5F33E1',
   },
 
   // Secondary Colors
